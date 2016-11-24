@@ -51,3 +51,52 @@ CREATE TABLE PRODUCTOS
 )
 
 
+CREATE TABLE CARGOS 
+(
+   IdCargo integer not null primary key, 
+   desCargo varchar(80) not null
+)
+
+
+create table Distrito
+(
+   IdDistrito integer  not null primary key, 
+    nomDistrito varchar(80) not null 
+)
+
+CREATE TABLE Empleados
+(
+   idEmpleado integer not null primary key, 
+   nomEmpleado varchar(80) not null, 
+   ApeEmpleado varchar(80) not null, 
+   FechaNac Datetime not null,
+   DirEmpleado varchar(100) not null, 
+   idDistrito varchar(100) not null, 
+   fonoEmpleado varchar(15) not null, 
+   constraint fk_id_cargo foreign key( IdCargo) references CARGOS( IdCargo)  
+   fecha_contratacion datetime not null,
+   fotoEmpleado image not null 
+)
+
+
+create table pedidosCabe
+(
+   IDPedido integer not null primary key, 
+   constraint fk_cliente_id_pedido foreign key(idCliente) references CLIENTE(idCliente),
+   constraint fk_id_emepleado_pedido foreign key(idEmpleado) references Empleados(idEmpleado),
+   fechaPedido datetime not null, 
+   fechaEntrega datetime not null, 
+   fechaEnvia datetime not null, 
+   envioPedido char(1) not null, 
+   destinatario varchar(60 )not null, 
+   dirDestinatario varchar(128) not null
+)
+
+create table pedidosDetalle 
+(
+     constraint fk_id_pedido foreign key(IDPedido) references pedidosCabe(IDPedido),
+	 constraint fk_id_producto foreign key(idProducto) references PRODUCTOS(idProducto),
+	 precioUnidad decimal(10,2) not null, 
+	 cantidad integer not null, 
+	 Descuento Decimal(10,2)
+)
